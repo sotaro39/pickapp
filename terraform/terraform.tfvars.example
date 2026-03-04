@@ -1,0 +1,29 @@
+# PickApp - Terraform変数ファイル (サンプル)
+# このファイルをコピーして terraform.tfvars として使用してください
+# cp terraform.tfvars.example terraform.tfvars
+
+# AWSリージョン
+aws_region = "us-east-2"
+
+# 環境名
+environment = "dev"
+
+# プロジェクト名
+project_name = "pickapp"
+
+# EC2 SSHキーペア名（事前にAWSコンソールで作成が必要）
+ec2_key_name = "your-key-pair-name"
+
+# RDS設定
+db_name     = "pickapp"
+db_username = "pickapp_admin"
+db_password = "your-secure-password-here"  # 16文字以上推奨
+
+# アプリケーション設定
+openai_api_key             = "sk-..."
+line_channel_access_token  = "your-line-token"
+line_user_id               = "your-line-user-id"
+slack_webhook_url          = "https://hooks.slack.com/services/..."
+
+# S3設定
+s3_bucket_name = "pickapp-articles"

@@ -1,0 +1,105 @@
+# PickApp - ソース設定ファイル
+# 技術ブログや公式サイトの監視設定を記載します
+# keywords が空の場合は全件通知（フィルタなし）
+# language: en の場合、AI要約・タイトルを日本語訳する
+
+sources:
+  # Zenn（トレンド記事）
+  - name: "Zenn"
+    url: "https://zenn.dev/feed"
+    type: rss
+    schedule: "0 9,18 * * *"  # 9時と18時
+    keywords: []  # 全件通知
+    notify:
+      - line
+      - slack
+
+  # AWS公式ブログ
+  - name: "AWS公式ブログ"
+    url: "https://aws.amazon.com/blogs/aws/feed/"
+    type: rss
+    schedule: "0 9,18 * * *"  # 9時と18時
+    keywords: []  # 全件通知
+    language: en  # 英語サイト→日本語訳
+    notify:
+      - slack
+
+  # Qiita（人気記事）
+  - name: "Qiita"
+    url: "https://qiita.com/popular-items/feed"
+    type: rss
+    schedule: "0 9,18 * * *"  # 9時と18時
+    keywords: []  # 全件通知
+    notify:
+      - line
+      - slack
+
+  # はてなブックマーク（テクノロジー）
+  - name: "はてブ Tech"
+    url: "https://b.hatena.ne.jp/hotentry/it.rss"
+    type: rss
+    schedule: "0 9,18 * * *"
+    keywords: []
+    notify:
+      - line
+      - slack
+
+  # Developers.IO（クラスメソッド）
+  - name: "Developers.IO"
+    url: "https://dev.classmethod.jp/feed/"
+    type: rss
+    schedule: "0 9,18 * * *"
+    keywords: []
+    notify:
+      - line
+      - slack
+
+  # GitHub Blog（海外・英語）
+  - name: "GitHub Blog"
+    url: "https://github.blog/feed/"
+    type: rss
+    schedule: "0 9,18 * * *"
+    keywords: []
+    language: en  # 英語サイト→日本語訳
+    notify:
+      - line
+      - slack
+
+  # # Webスクレイピング対応サイトの例（RSSなし）
+  # - name: "技術ブログX"
+  #   url: "https://example.com/blog"
+  #   type: scrape
+  #   schedule: "0 12 * * *"  # 毎日12時
+  #   selectors:
+  #     article_list: "div.post-list > article"
+  #     title: "h2.title"
+  #     link: "a.read-more"
+  #     date: "span.date"
+  #     content: "p.summary"
+  #   keywords: []  # 空の場合はフィルタなし（全件通知）
+  #   notify:
+  #     - line
+
+# 通知設定
+notifications:
+  line:
+    channel_access_token: "${LINE_CHANNEL_ACCESS_TOKEN}"
+    user_id: "${LINE_USER_ID}"
+  
+  slack:
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+
+# OpenAI設定
+openai:
+  api_key: "${OPENAI_API_KEY}"
+  model: "gpt-4o-mini"
+  max_tokens: 200
+  temperature: 0.3
+
+# S3ストレージ設定（記事をテキストファイルとして保存）
+s3:
+  enabled: true
+  bucket_name: "${S3_BUCKET_NAME}"
+  aws_access_key_id: "${AWS_ACCESS_KEY_ID}"
+  aws_secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
+  aws_region: "us-east-2"
