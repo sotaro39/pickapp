@@ -2,11 +2,15 @@
 
 import logging
 from typing import Optional
+from zoneinfo import ZoneInfo
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 from app.core.settings import AppSettings
+
+# 日本時間タイムゾーン
+JST = ZoneInfo("Asia/Tokyo")
 
 logger = logging.getLogger(__name__)
 
@@ -67,8 +71,8 @@ class SchedulerService:
         from app.jobs.fetch_job import execute_fetch_job
 
         try:
-            # Cron式をパース
-            trigger = CronTrigger.from_crontab(source.schedule)
+            # Cron式をパース（日本時間）
+            trigger = CronTrigger.from_crontab(source.schedule, timezone=JST)
 
             self.scheduler.add_job(
                 execute_fetch_job,

@@ -1,5 +1,8 @@
 FROM python:3.11-slim
 
+# タイムゾーン設定
+ENV TZ=Asia/Tokyo
+
 # 作業ディレクトリ設定
 WORKDIR /app
 
@@ -7,6 +10,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libpq-dev \
+    tzdata \
+    && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+    && echo "Asia/Tokyo" > /etc/timezone \
     && rm -rf /var/lib/apt/lists/*
 
 # 依存パッケージをインストール
